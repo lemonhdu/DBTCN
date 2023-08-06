@@ -2,7 +2,7 @@ import torch
 import os
 import argparse
 import random
-from model_cp import Trainer
+from model import Trainer
 from batch_gen import BatchGenerator
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
