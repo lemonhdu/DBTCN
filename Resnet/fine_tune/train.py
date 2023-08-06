@@ -115,7 +115,6 @@ def compute_loss_prob(pre_class, truth):
 
     criterion_ce = nn.CrossEntropyLoss(ignore_index=-100)
 
-    # loss = criterion_ce(pre_class+torch.log(torch.tensor(log_pi)).cuda(), truth.long())
     loss = criterion_ce(pre_class, truth.long())
 
     return loss
@@ -178,18 +177,13 @@ def train_model(dataloaders, model, args):
                 f.write(split + "    " + str(epoch) + "    " + str(cls_accu) + "\n")
                 f.close()
 
-            # if split == "test":
-            #     with open(save_train_test_log_path, "a") as f:
-            #         f.write(split + "    " + str(epoch) + "    " + str(cls_accu) + "\n")
-            #         f.close()
-
             if split == "valid" and cls_accu > best_cls_accu:
                 best_cls_accu = cls_accu
                 epoch_best = epoch
                 print(
                     "find new classify model, epoch {:3d}".format(epoch_best) + ", best cls:{:.4f}".format(best_cls_accu))
                 with open(save_train_log_path, "a") as f:
-                    f.write("find new classify model"+"\n")
+                    f.write("find new model"+"\n")
                     f.close()
                 if args.save:
                     torch.save({'epoch': epoch_best,
